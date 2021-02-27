@@ -1,7 +1,10 @@
 package entities.creature;
 
+//ABSTRACT CREATURE IN CASE WE ADD ITEMS AND OTHER NON CREATURE ENTITIES
+
 import entities.EntityImpl;
 import game.Handler;
+import tiles.Tile;
 
 public abstract class Creature extends EntityImpl {
 

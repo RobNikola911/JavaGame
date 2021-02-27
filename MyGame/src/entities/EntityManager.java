@@ -1,5 +1,6 @@
 package entities;
 
+import entities.creature.Player;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -10,7 +11,7 @@ public class EntityManager {
   private Player player;
   private ArrayList<EntityImpl> entities;
   private Comparator<EntityImpl> renderSort = (a, b) -> {
-    if (a.getY() + a.getHeight() < b.getY() + b.getHeight()){
+    if (a.getY() + a.getHeight() < b.getY() + b.getHeight()) {
       return -1;
     }
     return 1;
@@ -22,25 +23,25 @@ public class EntityManager {
     addEntity(player);
   }
 
-  public void tick(){
+  public void tick() {
     Iterator<EntityImpl> it = this.entities.iterator();
-    while (it.hasNext()){
+    while (it.hasNext()) {
       EntityImpl e = it.next();
       e.tick();
-      if(!e.isActive()){
+      if (!e.isActive()) {
         it.remove();
       }
     }
     this.entities.sort(this.renderSort);
   }
 
-  public void render(Graphics g){
+  public void render(Graphics g) {
     for (EntityImpl entityImpl : this.entities) {
       entityImpl.render(g);
     }
   }
 
-  public void addEntity(EntityImpl e){
+  public void addEntity(EntityImpl e) {
     this.entities.add(e);
   }
 

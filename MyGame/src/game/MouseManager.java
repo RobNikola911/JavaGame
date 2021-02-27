@@ -1,15 +1,21 @@
 package game;
 
+import gfx.ui.AboutManager;
+import gfx.ui.PauseManager;
+import gfx.ui.UIManager;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class MouseManager implements MouseListener, MouseMotionListener {
 
-  private boolean leftPressed, rightPressed;
+  private boolean leftPressed;
+  private boolean rightPressed;
   private int mouseX, mouseY;
 
-  //ADD A VARIABLE TO RELATE EVENTS mouseRelease and mouseMoved with UIManager's events onMouseMove and onMouseRelease!!!
+  //ADD A VARIABLE TO RELATE EVENTS mouseRelease and mouseMoved with UIManager's
+  // events onMouseMove and onMouseRelease!!!
   private UIManager uiManager;
   private AboutManager aboutManager;
   private PauseManager pauseManager;

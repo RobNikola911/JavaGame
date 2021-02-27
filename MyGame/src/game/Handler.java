@@ -1,5 +1,8 @@
 package game;
 
+import gfx.GameCamera;
+import world.World;
+
 public class Handler {
 
   private Game game;
@@ -44,5 +47,4 @@ public class Handler {
   public void setWorld(World world) {
     this.world = world;
   }
-
 }

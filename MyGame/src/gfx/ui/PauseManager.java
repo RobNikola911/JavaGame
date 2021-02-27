@@ -1,18 +1,18 @@
-package gfx.UI;
+package gfx.ui;
 
+import game.Handler;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class AboutManager{
-
+public class PauseManager {
 
   private Handler handler;
-  private ArrayList<UIObject> aboutObjects;
+  private ArrayList<UIObject> pauseObjects;
 
-  public AboutManager(Handler handler) {
+  public PauseManager(Handler handler) {
     this.handler = handler;
-    this.aboutObjects = new ArrayList<>();
+    this.pauseObjects = new ArrayList<>();
   }
 
   public Handler getHandler() {
@@ -23,32 +23,35 @@ public class AboutManager{
     this.handler = handler;
   }
 
-
   public void tick() {
-    for (UIObject o : this.aboutObjects) {
+    for (UIObject o : this.pauseObjects) {
       o.tick();
     }
   }
 
   public void render(Graphics g) {
-    for (UIObject o : this.aboutObjects) {
+    for (UIObject o : this.pauseObjects) {
       o.render(g);
     }
   }
 
   public void onMouseMove(MouseEvent e) {
-    for (UIObject o : this.aboutObjects) {
+    for (UIObject o : this.pauseObjects) {
       o.onMouseMove(e);
     }
   }
 
   public void onMouseRelease(MouseEvent e) {
-    for (UIObject o : this.aboutObjects) {
+    for (UIObject o : this.pauseObjects) {
       o.onMouseRelease(e);
     }
   }
 
   public void addObject(UIObject o) {
-    this.aboutObjects.add(o);
+    this.pauseObjects.add(o);
+  }
+
+  public void removeObject(UIObject o) {
+    this.pauseObjects.remove(o);
   }
 }

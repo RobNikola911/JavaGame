@@ -18,13 +18,13 @@ public class InputManager implements KeyListener {
 
   public void tick() {
     for (int i = 0; i < this.keys.length; i++) {
-      if (this.cantPress[i] && !this.keys[i]){
+      if (this.cantPress[i] && !this.keys[i]) {
         this.cantPress[i] = false;
       } else if (this.justPressed[i]) {
         this.cantPress[i] = true;
         this.justPressed[i] = false;
       }
-      if (!this.cantPress[i] && this.keys[i]){
+      if (!this.cantPress[i] && this.keys[i]) {
         this.justPressed[i] = true;
       }
     }
@@ -44,8 +44,8 @@ public class InputManager implements KeyListener {
 
   }
 
-  public boolean keyJustPressed(int keyCode){
-    if(keyCode < 0 || keyCode >= this.keys.length) {
+  public boolean keyJustPressed(int keyCode) {
+    if (keyCode < 0 || keyCode >= this.keys.length) {
       return false;
     }
     return this.justPressed[keyCode];
@@ -58,7 +58,7 @@ public class InputManager implements KeyListener {
 
   @Override
   public void keyPressed(KeyEvent e) {
-    if (e.getKeyCode() < 0 || e.getKeyCode() >= this.keys.length){
+    if (e.getKeyCode() < 0 || e.getKeyCode() >= this.keys.length) {
       return;
     }
     this.keys[e.getKeyCode()] = true;
@@ -66,8 +66,9 @@ public class InputManager implements KeyListener {
 
   @Override
   public void keyReleased(KeyEvent e) {
-    if(e.getKeyCode() < 0 || e.getKeyCode() >= this.keys.length)
+    if (e.getKeyCode() < 0 || e.getKeyCode() >= this.keys.length) {
       return;
+    }
     this.keys[e.getKeyCode()] = false;
   }
 }

@@ -1,10 +1,22 @@
 package tiles;
 
-import java.awt.Graphics;
+import tiles.desert.Cactus1;
+import tiles.desert.Cactus2;
+import tiles.desert.Sand;
+import tiles.greenland.GrassTile;
+import tiles.greenland.StoneTile;
+import tiles.greenland.WaterTile;
+import tiles.greenland.decorations.*;
+import tiles.greenland.stone_wall.*;
+import tiles.iceland.SnowTile;
+import tiles.iceland.SnowyBush;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 //TILE CLASS ALL TILES WILL EXTEND THIS CLASS
 public abstract class Tile {
+
   //SO WE DONT HAVE MAGIC NUMBERS DIFFERENT TILES IDS
   private static final int GRASS_ID = 0;
   private static final int WATER_ID = 1;//A

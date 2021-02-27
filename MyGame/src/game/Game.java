@@ -3,8 +3,7 @@ package game;
 import game.states.*;
 import gfx.Assets;
 import gfx.GameCamera;
-import music.Sound;
-
+//import music.Sound;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -21,11 +20,12 @@ public class Game implements Runnable {
   private Display display;
   private boolean running = false;
   private Thread thread;
-  private Sound sound;
+  //private Sound sound;
   private boolean isMuted;
 
   //BufferStrategy - Could be considered as a way for the computer to draw things to the screen.
-  //Figuratively it is a kind of a "Hidden" screen within the computer drawn before to be displayed on the monitor.
+  //Figuratively it is a kind of a "Hidden" screen within the computer drawn before to be
+  // displayed on the monitor.
   //Purpose:To prevent flickering in result of drawing directly on the monitor.
   private BufferStrategy bs;
   private Graphics g;
@@ -53,12 +53,11 @@ public class Game implements Runnable {
     this.keyManager = new InputManager();
     this.mouseManager = new MouseManager();
     this.setMuted(false);
-    this.sound = new Sound();
+    //this.sound = new Sound();
   }
 
   private void init() {
     this.display = new Display(this.title, this.width, this.height);
-
     //ADDING KeyListener TO THE frame VARIABLE OF CLASS Display!!!
     //HOW? - BY PASSING THE INSTANCE keyManager OF CLASS InputManager!!!
     this.display.getFrame().addKeyListener(this.keyManager);
@@ -71,13 +70,10 @@ public class Game implements Runnable {
 
     this.handler = new Handler(this);
     this.gameCamera = new GameCamera(this.handler, INITIAL_XY_OFFSETS[0], INITIAL_XY_OFFSETS[1]);
-
     this.pauseState = new PauseMenu(this.handler);
     this.gameState = new GameState(this.handler);
-
     this.menuState = new MenuState(this.handler);
     this.aboutState = new AboutState(this.handler);
-
     State.setState(this.menuState);
   }
 
@@ -86,11 +82,11 @@ public class Game implements Runnable {
     if (State.getState() != null) {
       State.getState().tick();
     }
-    if (!isMuted()) {
+   /* if (!isMuted()) {
       this.sound.startMusic();
     } else {
       this.sound.stopMusic();
-    }
+    }*/
   }
 
   private void render() {
@@ -122,7 +118,8 @@ public class Game implements Runnable {
     int fps = FRAMES_PER_SECOND;
 
     //TIME IN NANOSECONDS - 1 SECOND == 1000000000(1 Billion) nanoseconds!
-    //timePerTick - THE MAXIMUM AMOUNT OF TIME AVAILABLE FOR EXECUTING ticket() and render() METHODS IN ORDER TO ACHIEVE 60 FRAMES PER SECOND .
+    //timePerTick - THE MAXIMUM AMOUNT OF TIME AVAILABLE FOR EXECUTING ticket()
+    // and render() METHODS IN ORDER TO ACHIEVE 60 FRAMES PER SECOND .
     double timePerTick = SECOND_AS_NANOSECONDS / fps;
     double delta = 0;
     long now;
@@ -230,6 +227,4 @@ public class Game implements Runnable {
   public void setMuted(boolean muted) {
     this.isMuted = muted;
   }
-
-
 }

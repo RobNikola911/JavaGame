@@ -9,7 +9,7 @@ import entities.creature.villains.RandomVillain;
 
 import entities.statics.*;
 import game.Handler;
-import items.ItemManager;
+//import items.ItemManager;
 import saves.SaveObject;
 import tiles.Tile;
 import utils.Loader;
@@ -27,19 +27,20 @@ public class World {
   private static final int[] VILLAINS_XY_POSITION_RAND_INT_GENERATORS = {500, 300};
   private static final int[] VILLAINS_XY_POSITION_COORD_ADDENDS = {200, 150};
 
-  //WORLD WIDTH AND HEIGHT, HERO SPAWN COORDINATES WILL BE INITIALIZED IN LOAD WORLD METHOD FROM OUR WORLD FILE
+  // WORLD WIDTH AND HEIGHT, HERO SPAWN COORDINATES WILL BE INITIALIZED
+  // IN LOAD WORLD METHOD FROM OUR WORLD FILE
   private Handler handler;
   private int width, height;
   private int spawnX, spawnY;
   private int[][] tilesWorldMatrix;
   private EntityManager entityManager;
-  private ItemManager itemManager;
+  //  private ItemManager itemManager;
   private long time = 0;
 
   public World(Handler handler, String path) {
     this.handler = handler;
     this.entityManager = new EntityManager(new Player(handler, 30, 30));
-    this.itemManager = new ItemManager(handler);
+//    this.itemManager = new ItemManager(handler);
     //THE path PARAMETER IS PASSED BY GameState.java LINE Nr. -19!!!
     loadWorld(path);
 
@@ -51,29 +52,37 @@ public class World {
 
   public void tick() {
     this.time++;
-    this.itemManager.tick();
+//    this.itemManager.tick();
     this.entityManager.tick();
-    if (this.time % FRAMES_ELAPSED_FOR_TO_GENERATE_NEW_ANIMAL == 0){
+    if (this.time % FRAMES_ELAPSED_FOR_TO_GENERATE_NEW_ANIMAL == 0) {
       Random rd = new Random();
-      entityManager.addEntity(new Animal(handler, rd.nextInt(ANIMAL_XY_POSITION_RAND_INT_GENERATOR) + ANIMAL_XY_POSITION_COORD_ADDEND[0], rd.nextInt(ANIMAL_XY_POSITION_RAND_INT_GENERATOR) + ANIMAL_XY_POSITION_COORD_ADDEND[1]));
+      entityManager.addEntity(new Animal(handler,
+          rd.nextInt(ANIMAL_XY_POSITION_RAND_INT_GENERATOR) + ANIMAL_XY_POSITION_COORD_ADDEND[0],
+          rd.nextInt(ANIMAL_XY_POSITION_RAND_INT_GENERATOR) + ANIMAL_XY_POSITION_COORD_ADDEND[1]));
     }
 
-    if(time % FRAMES_ELAPSED_TO_GENERATE_NEW_CHASER_VILLAIN == 0){
+    if (time % FRAMES_ELAPSED_TO_GENERATE_NEW_CHASER_VILLAIN == 0) {
       Random random = new Random();
-      entityManager.addEntity(new ChaserVillain(handler, random.nextInt(VILLAINS_XY_POSITION_RAND_INT_GENERATORS[0]) + VILLAINS_XY_POSITION_COORD_ADDENDS[0], random.nextInt(VILLAINS_XY_POSITION_RAND_INT_GENERATORS[1]) + VILLAINS_XY_POSITION_COORD_ADDENDS[1]));
-      entityManager.addEntity(new RandomVillain(handler, random.nextInt(VILLAINS_XY_POSITION_RAND_INT_GENERATORS[0]) + VILLAINS_XY_POSITION_COORD_ADDENDS[0], random.nextInt(VILLAINS_XY_POSITION_RAND_INT_GENERATORS[1]) + VILLAINS_XY_POSITION_COORD_ADDENDS[1]));
+      entityManager.addEntity(new ChaserVillain(handler,
+          random.nextInt(VILLAINS_XY_POSITION_RAND_INT_GENERATORS[0])
+              + VILLAINS_XY_POSITION_COORD_ADDENDS[0],
+          random.nextInt(VILLAINS_XY_POSITION_RAND_INT_GENERATORS[1])
+              + VILLAINS_XY_POSITION_COORD_ADDENDS[1]));
+      entityManager.addEntity(new RandomVillain(handler,
+          random.nextInt(VILLAINS_XY_POSITION_RAND_INT_GENERATORS[0])
+              + VILLAINS_XY_POSITION_COORD_ADDENDS[0],
+          random.nextInt(VILLAINS_XY_POSITION_RAND_INT_GENERATORS[1])
+              + VILLAINS_XY_POSITION_COORD_ADDENDS[1]));
       this.time = 0;
     }
-    if(this.entityManager.getPlayer().isShooting() && this.time % 10 == 0
-        && entityManager.getPlayer().getMana() > 5){
+    if (this.entityManager.getPlayer().isShooting() && this.time % 10 == 0
+        && entityManager.getPlayer().getMana() > 5) {
       entityManager.addEntity(new Projectile(handler,
           entityManager.getPlayer().getX(),
           entityManager.getPlayer().getY(),
           entityManager.getPlayer().getDir()));
       entityManager.getPlayer().takeMana();
     }
-
-
   }
 
   public void render(Graphics g) {
@@ -81,31 +90,38 @@ public class World {
     //xEnd AND yEnd CONTAIN THE Most-Bottom-Right Tile THAT THE USER CAN CURRENTLY SEE ON THE SCREEN.
     //THE PURPOSE IS TO render ONLY TILES VISIBLE ON DISPLAY.
     int xStart = (int) Math.max(0, this.handler.getGameCamera().getxOffset() / Tile.getTileWidth());
-    int xEnd = (int) Math.min(this.width, (this.handler.getGameCamera().getxOffset() + this.handler.getWidth()) / Tile.getTileWidth()+ 1);
-    int yStart = (int) Math.max(0, this.handler.getGameCamera().getyOffset() / Tile.getTileHeight());
-    int yEnd = (int) Math.min(this.height, (this.handler.getGameCamera().getyOffset() + this.handler.getHeight()) / Tile.getTileHeight() + 1);
+    int xEnd = (int) Math.min(this.width,
+        (this.handler.getGameCamera().getxOffset() + this.handler.getWidth()) / Tile.getTileWidth()
+            + 1);
+    int yStart = (int) Math
+        .max(0, this.handler.getGameCamera().getyOffset() / Tile.getTileHeight());
+    int yEnd = (int) Math.min(this.height,
+        (this.handler.getGameCamera().getyOffset() + this.handler.getHeight()) / Tile
+            .getTileHeight() + 1);
 
     //ITERATE THROUGH THE TILES ARRAY AND RENDER
     for (int y = yStart; y < yEnd; y++) {
       for (int x = xStart; x < xEnd; x++) {
-        getTile(x, y).render(g, (int) (x * Tile.getTileWidth()- this.handler.getGameCamera().getxOffset()),
-            (int) (y * Tile.getTileHeight() - this.handler.getGameCamera().getyOffset()));
+        getTile(x, y)
+            .render(g, (int) (x * Tile.getTileWidth() - this.handler.getGameCamera().getxOffset()),
+                (int) (y * Tile.getTileHeight() - this.handler.getGameCamera().getyOffset()));
       }
     }
 
-    this.itemManager.render(g);
+    //this.itemManager.render(g);
 
     this.entityManager.render(g);
   }
 
   public Tile getTile(int x, int y) {
-    if(x < 0 || y < 0 || x >= this.width || y >= this.height) {
+    if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
       return Tile.getGrassTile();
     }
     Tile t = Tile.getTiles()[this.tilesWorldMatrix[x][y]];
     //IF WE CALL WITH EMPTY MATRIX INDEX RETURN GRASS TILE
-    if (t == null)
+    if (t == null) {
       return Tile.getGrassTile();
+    }
     return t;
   }
 
@@ -124,7 +140,7 @@ public class World {
 
         //ASSIGNING EVERY INDEX TO THE ARRAY
         //NUMBER 4 IS ADDED BECAUSE FIRST 4 ELEMENTS VALUES ARE ASSIGNED TO - width, height, spawnX, spawnY
-        tilesWorldMatrix[x][y] = Loader.parseWorldFile(tokens[(x+y*width) + 4]);
+        tilesWorldMatrix[x][y] = Loader.parseWorldFile(tokens[(x + y * width) + 4]);
       }
     }
   }
@@ -169,11 +185,11 @@ public class World {
     this.entityManager.addEntity(new ChaserVillain(handler, 500, 300));
     this.entityManager.addEntity(new ChaserVillain(handler, 700, 500));
 
-    this.entityManager.addEntity(new Chest(handler, 352,320));//AY
-    this.entityManager.addEntity(new Chest(handler, 416,832));//AY
+    this.entityManager.addEntity(new Chest(handler, 352, 320));//AY
+    this.entityManager.addEntity(new Chest(handler, 416, 832));//AY
 
-    this.entityManager.addEntity(new Gate(handler, 175,550));//AY
-    this.entityManager.addEntity(new Gate(handler, 1140,1090));//AY
+    this.entityManager.addEntity(new Gate(handler, 175, 550));//AY
+    this.entityManager.addEntity(new Gate(handler, 1140, 1090));//AY
   }
 
   public Handler getHandler() {
@@ -184,15 +200,15 @@ public class World {
     this.handler = handler;
   }
 
-  public ItemManager getItemManager() {
+/*  public ItemManager getItemManager() {
     return this.itemManager;
-  }
+  }*/
 
-  public int getWidth(){
+  public int getWidth() {
     return this.width;
   }
 
-  public int getHeight(){
+  public int getHeight() {
     return this.height;
   }
 
@@ -200,7 +216,7 @@ public class World {
     return this.entityManager;
   }
 
-  public void savedPlayer(SaveObject saveObject){
+  public void savedPlayer(SaveObject saveObject) {
     this.entityManager.setSavedPlayer(new Player(this.handler, 30, 30, saveObject));
   }
 }
